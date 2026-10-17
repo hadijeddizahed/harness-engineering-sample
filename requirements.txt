@@ -1,0 +1,4 @@
+# Development & Toolchain Environment Specifications
+# Runtime: Java 24
+# Build: Apache Maven 3.9.9
+# Framework: Spring Boot 3.4.x

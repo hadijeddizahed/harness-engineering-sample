@@ -1,0 +1,130 @@
+{
+  "project": "harness-engineering-sample",
+  "last_updated": "2026-10-17",
+  "rules": {
+    "single_active_feature": true,
+    "passing_requires_evidence": true,
+    "do_not_skip_verification": true
+  },
+  "features": [
+    {
+      "id": "FEAT-001",
+      "priority": 1,
+      "area": "bootstrap",
+      "title": "Spring Boot 3 application setup and health endpoint",
+      "behavior": "A client sending GET /api/health receives HTTP 200 with status UP.",
+      "state": "planned",
+      "layers": [
+        {
+          "label": "layer_1_unit",
+          "cmd": "mvn test-compile",
+          "repair": "Check pom.xml dependencies and verify Java 24 compilation."
+        },
+        {
+          "label": "layer_2_integration",
+          "cmd": "mvn test -Dtest=HealthControllerTest",
+          "repair": "Ensure HealthController returns Map.of('status', 'UP') and tests pass."
+        },
+        {
+          "label": "layer_3_architecture",
+          "cmd": "bash scripts/check-arch.sh",
+          "repair": "Fix architectural boundary violations reported by scripts/check-arch.sh."
+        }
+      ],
+      "verification": [
+        "Run `make check`",
+        "Verify GET /api/health returns 200 with JSON {\"status\":\"UP\"}"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "FEAT-002",
+      "priority": 2,
+      "area": "tasks",
+      "title": "Create and retrieve tasks via REST",
+      "behavior": "A client can POST /api/tasks to create a task and GET /api/tasks/{id} to retrieve it.",
+      "state": "planned",
+      "layers": [
+        {
+          "label": "layer_1_unit",
+          "cmd": "mvn test-compile",
+          "repair": "Check DTO and Entity field types."
+        },
+        {
+          "label": "layer_2_integration",
+          "cmd": "mvn test -Dtest=TaskControllerTest",
+          "repair": "Verify TaskController delegates to TaskService and returns HTTP 201/200."
+        },
+        {
+          "label": "layer_3_architecture",
+          "cmd": "bash scripts/check-arch.sh",
+          "repair": "Do not let Controller access Repository directly."
+        }
+      ],
+      "verification": [
+        "POST /api/tasks with title and description returns 201 Created.",
+        "GET /api/tasks/{id} returns the task with id, title, description, and status PENDING."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "FEAT-003",
+      "priority": 3,
+      "area": "tasks",
+      "title": "Update task lifecycle status",
+      "behavior": "A client can PATCH /api/tasks/{id}/status to change status between PENDING, IN_PROGRESS, COMPLETED.",
+      "state": "planned",
+      "layers": [
+        {
+          "label": "layer_1_unit",
+          "cmd": "mvn test-compile",
+          "repair": "Verify TaskStatus enum definitions."
+        },
+        {
+          "label": "layer_2_integration",
+          "cmd": "mvn test -Dtest=TaskStatusTest",
+          "repair": "Validate status transition rules in TaskService."
+        },
+        {
+          "label": "layer_3_architecture",
+          "cmd": "bash scripts/check-arch.sh",
+          "repair": "Ensure Service does not leak HTTP servlet exceptions."
+        }
+      ],
+      "verification": [
+        "PATCH /api/tasks/{id}/status with status 'IN_PROGRESS' updates status and returns 200.",
+        "Attempting invalid transition returns 400 Bad Request."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "FEAT-004",
+      "priority": 4,
+      "area": "tasks",
+      "title": "Filter tasks by status",
+      "behavior": "A client can GET /api/tasks?status=COMPLETED to retrieve only matching tasks.",
+      "state": "planned",
+      "layers": [
+        {
+          "label": "layer_1_unit",
+          "cmd": "mvn test-compile",
+          "repair": "Verify query methods in TaskRepository."
+        },
+        {
+          "label": "layer_2_integration",
+          "cmd": "mvn test -Dtest=TaskFilterTest",
+          "repair": "Ensure TaskService filters by status enum."
+        },
+        {
+          "label": "layer_3_architecture",
+          "cmd": "bash scripts/check-arch.sh",
+          "repair": "Check architecture boundaries."
+        }
+      ],
+      "verification": [
+        "GET /api/tasks?status=COMPLETED returns only tasks with status COMPLETED."
+      ],
+      "evidence": []
+    }
+  ]
+}

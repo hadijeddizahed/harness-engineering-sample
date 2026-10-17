@@ -1,0 +1,22 @@
+{
+  "rules": [
+    {
+      "id": "ARCH-001",
+      "description": "Controllers must not access repositories directly; use service layer",
+      "check": "find src/main/java -name '*Controller.java' -exec grep -l 'Repository' {} \\;",
+      "expect": "empty",
+      "what": "Controller directly references a Repository class",
+      "why": "Controllers handle HTTP routing and mapping. Domain logic and persistence coordination belong in the service layer.",
+      "fix": "Inject the corresponding Service class instead of Repository in the Controller."
+    },
+    {
+      "id": "ARCH-002",
+      "description": "Entities must not be directly exposed in Controller method signatures",
+      "check": "grep -rn 'public Task ' src/main/java/*Controller.java 2>/dev/null",
+      "expect": "empty",
+      "what": "Controller endpoint exposes internal JPA Entity directly instead of DTO",
+      "why": "Exposing entities leaks internal persistence schema and causes serialization or lazy-loading issues.",
+      "fix": "Create and return a Response DTO class instead of the Entity."
+    }
+  ]
+}

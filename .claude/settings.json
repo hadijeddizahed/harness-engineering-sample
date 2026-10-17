@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make *)",
+      "Bash(./init.sh*)",
+      "Bash(mvn *)",
+      "Bash(./mvnw *)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(git push --force*)"
+    ]
+  }
+}
