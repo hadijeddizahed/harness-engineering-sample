@@ -47,7 +47,7 @@
       "area": "tasks",
       "title": "Create and retrieve tasks via REST",
       "behavior": "A client can POST /api/tasks to create a task and GET /api/tasks/{id} to retrieve it.",
-      "state": "planned",
+      "state": "passing",
       "layers": [
         {
           "label": "layer_1_unit",
@@ -69,7 +69,13 @@
         "POST /api/tasks with title and description returns 201 Created.",
         "GET /api/tasks/{id} returns the task with id, title, description, and status PENDING."
       ],
-      "evidence": []
+      "evidence": [
+        "make verify-feature FEATURE=FEAT-002 passed all 3 layers.",
+        "POST /api/tasks verified with MockMvc returning 201 Created with JSON ID and status PENDING.",
+        "POST /api/tasks with blank title verified returning 400 Bad Request.",
+        "GET /api/tasks/{id} verified with MockMvc returning 200 OK and 404 for missing ID.",
+        "scripts/check-arch.sh passed with 0 violations."
+      ]
     },
     {
       "id": "FEAT-003",
