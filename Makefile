@@ -1,4 +1,7 @@
-.PHONY: setup dev check test vcr verify-feature e2e check-arch session-start session-end clean-check
+.PHONY: setup dev check test vcr verify-feature e2e check-arch session-start session-end clean-check status
+
+status:
+	@bash scripts/status.sh
 
 MVN := $(shell if [ -f ./mvnw ]; then echo "./mvnw"; else echo "mvn"; fi)
 

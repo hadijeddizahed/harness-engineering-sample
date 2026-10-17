@@ -1,7 +1,7 @@
 # PROGRESS.md
 
 ## Current State
-- **Last commit**: `abdac18`
+- **Last commit**: `c294523`
 - **Verification status**: `make check: passing (FEAT-002 verified)`
 - **Active feature**: None (FEAT-002 passing, ready for FEAT-003)
 
