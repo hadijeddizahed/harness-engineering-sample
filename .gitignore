@@ -33,3 +33,4 @@ target/
 
 ### Traces & Temp ###
 .harness/traces/*.log
+.harness/traces/*.jsonl

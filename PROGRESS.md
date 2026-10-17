@@ -1,19 +1,19 @@
 # PROGRESS.md
 
 ## Current State
-- **Last commit**: `48294e7`
-- **Verification status**: `make check: passing (73/73 audit checks passed)`
-- **Active feature**: None (Ready to activate `FEAT-001`)
+- **Last commit**: `4f08ead`
+- **Verification status**: `make check: passing (FEAT-001 verified)`
+- **Active feature**: None (FEAT-001 passing, ready for FEAT-002)
 
 ## In Progress
-- Harness engineering bootstrap and foundation setup.
+- None (WIP=0, clean handoff)
 
 ## Next Steps
-1. Complete Step 1 foundation files and run the harness audit script.
-2. Activate `FEAT-001` (change state to `active` in `feature_list.json`).
-3. Scaffold Spring Boot `pom.xml`, Application main class, and HealthController.
-4. Run `make check` and `./init.sh` to record verification evidence.
-5. Clock-out `FEAT-001` as `passing` and make initial clean commit.
+1. Activate `FEAT-002` (Create and retrieve tasks via REST).
+2. Add Spring Data JPA + H2 in-memory dependencies to `pom.xml`.
+3. Implement `Task` entity, `TaskRepository`, `TaskService`, and `TaskController`.
+4. Add MockMvc integration tests and run `make verify-feature FEATURE=FEAT-002`.
+5. Clock out `FEAT-002`.
 
 ## Blockers
 - None.

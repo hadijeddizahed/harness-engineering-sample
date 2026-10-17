@@ -13,7 +13,7 @@
       "area": "bootstrap",
       "title": "Spring Boot 3 application setup and health endpoint",
       "behavior": "A client sending GET /api/health receives HTTP 200 with status UP.",
-      "state": "planned",
+      "state": "passing",
       "layers": [
         {
           "label": "layer_1_unit",
@@ -35,7 +35,11 @@
         "Run `make check`",
         "Verify GET /api/health returns 200 with JSON {\"status\":\"UP\"}"
       ],
-      "evidence": []
+      "evidence": [
+        "make verify-feature FEATURE=FEAT-001 passed all 3 layers.",
+        "MockMvc verified HealthControllerTest: GET /api/health returned HTTP 200 with JSON status=UP.",
+        "scripts/check-arch.sh passed with 0 violations."
+      ]
     },
     {
       "id": "FEAT-002",

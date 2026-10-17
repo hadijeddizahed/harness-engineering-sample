@@ -12,7 +12,8 @@ echo "=== Running Architectural Rules Verification ==="
 VIOLATIONS=0
 
 # Check Rule ARCH-001: Controllers must not access Repositories directly
-if find src/main/java -name '*Controller.java' 2>/dev/null | xargs grep -E 'Repository[[:space:]]+[a-zA-Z0-9_]+;' 2>/dev/null; then
+CONTROLLERS=$(find src/main/java -name '*Controller.java' 2>/dev/null || true)
+if [[ -n "$CONTROLLERS" ]] && grep -qE 'Repository[[:space:]]+[a-zA-Z0-9_]+;' $CONTROLLERS 2>/dev/null; then
   echo "[ARCH-001 VIOLATION]"
   echo "  WHAT: Controller directly references a Repository class."
   echo "  WHY:  Controllers handle HTTP routing. Domain logic and persistence belong in the service layer."
@@ -21,7 +22,8 @@ if find src/main/java -name '*Controller.java' 2>/dev/null | xargs grep -E 'Repo
 fi
 
 # Check Rule ARCH-002: Service layer must not import servlet/HTTP classes
-if find src/main/java -name '*Service.java' 2>/dev/null | xargs grep -E 'import (jakarta\.servlet|org\.springframework\.web)' 2>/dev/null; then
+SERVICES=$(find src/main/java -name '*Service.java' 2>/dev/null || true)
+if [[ -n "$SERVICES" ]] && grep -qE 'import (jakarta\.servlet|org\.springframework\.web)' $SERVICES 2>/dev/null; then
   echo "[ARCH-002 VIOLATION]"
   echo "  WHAT: Service layer imports web/HTTP classes."
   echo "  WHY:  Core services must remain protocol-agnostic."
